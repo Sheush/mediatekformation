@@ -28,7 +28,7 @@ class FormationsController extends AbstractController {
     private $categorieRepository;
     
     /**
-     * Constante pour la page twig utilisé
+     * Page twig
      */
     private const PAGE_FORMATION = "pages/formations.html.twig";
     

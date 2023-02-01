@@ -35,7 +35,7 @@ class PlaylistsController extends AbstractController {
     private $categorieRepository; 
     
     /**
-     * Constante pour la page twig utilisé
+     * Page twig
      */
     private const PAGE_PLAYLISTS = "pages/playlists.html.twig";
     
@@ -52,7 +52,7 @@ class PlaylistsController extends AbstractController {
      * @return Response
      */
     public function index(): Response{
-        $playlists = $this->playlistRepository->findAllOrderBy('name', 'ASC');
+        $playlists = $this->playlistRepository->findAllOrderByName('name', 'ASC');
         $categories = $this->categorieRepository->findAll();
         return $this->render(self::PAGE_PLAYLISTS, [
             'playlists' => $playlists,
@@ -61,19 +61,26 @@ class PlaylistsController extends AbstractController {
     }
 
     /**
-     * @Route("/playlists/tri/{champ}/{ordre}", name="playlists.sort")
-     * @param type $champ
-     * @param type $ordre
-     * @return Response
-     */
+    * @Route("/playlists/tri/{champ}/{ordre}", name="playlists.sort")
+    * @param type $champ
+    * @param type $ordre
+    * @return Response
+    */
     public function sort($champ, $ordre): Response{
-        $playlists = $this->playlistRepository->findAllOrderBy($champ, $ordre);
-        $categories = $this->categorieRepository->findAll();
-        return $this->render(self::PAGE_PLAYLISTS, [
-            'playlists' => $playlists,
-            'categories' => $categories            
+        switch($champ){
+            case "name":
+                $playlists = $this->playlistRepository->findAllOrderByName($ordre);
+                break;
+            case "nbformations":
+                $playlists = $this->playlistRepository->findAllOrderByNbFormations($ordre);
+                break;
+        }
+     $categories = $this->categorieRepository->findAll();
+     return $this->render("pages/playlists.html.twig", [
+        'playlists' => $playlists,
+        'categories' => $categories
         ]);
-    }         
+     }         
     
     /**
      * @Route("/playlists/recherche/{champ}/{table}", name="playlists.findallcontain")
