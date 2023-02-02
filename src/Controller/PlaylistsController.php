@@ -35,9 +35,14 @@ class PlaylistsController extends AbstractController {
     private $categorieRepository; 
     
     /**
-     * Page twig
+     * Page twig pour les playlists
      */
     private const PAGE_PLAYLISTS = "pages/playlists.html.twig";
+    
+    /**
+     * Page twig pour une playlist
+     */
+    private const PAGE_PLAYLIST = "pages/playlist.html.twig";
     
     function __construct(PlaylistRepository $playlistRepository, 
             CategorieRepository $categorieRepository,
@@ -52,7 +57,7 @@ class PlaylistsController extends AbstractController {
      * @return Response
      */
     public function index(): Response{
-        $playlists = $this->playlistRepository->findAllOrderByName('name', 'ASC');
+        $playlists = $this->playlistRepository->findAllOrderByName('ASC');
         $categories = $this->categorieRepository->findAll();
         return $this->render(self::PAGE_PLAYLISTS, [
             'playlists' => $playlists,
@@ -68,6 +73,8 @@ class PlaylistsController extends AbstractController {
     */
     public function sort($champ, $ordre): Response{
         switch($champ){
+            default:
+                $playlists = $this->playlistRepository->findAllOrderByName($ordre);
             case "name":
                 $playlists = $this->playlistRepository->findAllOrderByName($ordre);
                 break;
@@ -91,7 +98,12 @@ class PlaylistsController extends AbstractController {
      */
     public function findAllContain($champ, Request $request, $table=""): Response{
         $valeur = $request->get("recherche");
-        $playlists = $this->playlistRepository->findByContainValue($champ, $valeur, $table);
+        switch($table){
+            default:
+                $playlists = $this->playlistRepository->findByContainValueTable($champ, $valeur);
+            case "":
+                $playlists = $this->playlistRepository->findByContainValue($champ, $valeur);
+        }
         $categories = $this->categorieRepository->findAll();
         return $this->render(self::PAGE_PLAYLISTS, [
             'playlists' => $playlists,
@@ -110,7 +122,7 @@ class PlaylistsController extends AbstractController {
         $playlist = $this->playlistRepository->find($id);
         $playlistCategories = $this->categorieRepository->findAllForOnePlaylist($id);
         $playlistFormations = $this->formationRepository->findAllForOnePlaylist($id);
-        return $this->render(self::PAGE_PLAYLISTS, [
+        return $this->render(self::PAGE_PLAYLIST, [
             'playlist' => $playlist,
             'playlistcategories' => $playlistCategories,
             'playlistformations' => $playlistFormations

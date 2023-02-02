@@ -73,35 +73,44 @@ class PlaylistRepository extends ServiceEntityRepository
      * ou tous les enregistrements si la valeur est vide
      * @param type $champ
      * @param type $valeur
-     * @param type $table si $champ dans une autre table
      * @return Playlist[]
      */
-    public function findByContainValue($champ, $valeur, $table=""): array{
+    public function findByContainValue($champ, $valeur): array{
         if($valeur==""){
             return $this->findAllOrderByName('ASC');
-        }    
-        if($table==""){      
-            return $this->createQueryBuilder('p')
-                    ->leftjoin('p.formations', 'f')
-                    ->where('p.'.$champ.' LIKE :valeur')
-                    ->setParameter('valeur', '%'.$valeur.'%')
-                    ->groupBy('p.id')
-                    ->orderBy('p.name', 'ASC')
-                    ->getQuery()
-                    ->getResult();              
-        }else{   
-            return $this->createQueryBuilder('p')
-                    ->leftjoin('p.formations', 'f')
-                    ->leftjoin('f.categories', 'c')
-                    ->where('c.'.$champ.' LIKE :valeur')
-                    ->setParameter('valeur', '%'.$valeur.'%')
-                    ->groupBy('p.id')
-                    ->orderBy('p.name', 'ASC')
-                    ->getQuery()
-                    ->getResult();              
-            
-        }           
-    }    
+        }          
+        return $this->createQueryBuilder('p')
+                ->leftjoin('p.formations', 'f')
+                ->where('p.'.$champ.' LIKE :valeur')
+                ->setParameter('valeur', '%'.$valeur.'%')
+                ->groupBy('p.id')
+                ->orderBy('p.name', 'ASC')
+                ->getQuery()
+                ->getResult();                         
+    }
+
+    /**
+     * Enregistrements dont un champ contient une valeur
+     * ou tous les enregistrements si la valeur est vide 
+     * et que $champ est dans une autre table
+     * @param type $champ
+     * @param type $valeur
+     * @return Playlist[]
+     */
+    public function findByContainValueTable($champ, $valeur): array{
+        if($valeur==""){
+            return $this->findAllOrderByName('ASC');
+        }       
+        return $this->createQueryBuilder('p')
+                ->leftjoin('p.formations', 'f')
+                ->leftjoin('f.categories', 'c')
+                ->where('c.'.$champ.' LIKE :valeur')
+                ->setParameter('valeur', '%'.$valeur.'%')
+                ->groupBy('p.id')
+                ->orderBy('p.name', 'ASC')
+                ->getQuery()
+                ->getResult();                       
+    }
 
 
     
