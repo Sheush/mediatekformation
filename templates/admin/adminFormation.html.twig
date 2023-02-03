@@ -1,0 +1,8 @@
+{% extends "basefront.html.twig" %}
+{% block body %}
+    <h1> Editer la formation </h1>
+    {{ form_start(form) }}
+        {{ form_rest(form) }}
+        <button class="btn btn-primary">Sauvegarder</button>
+    {{ form_end(form) }}
+{% endblock %}
