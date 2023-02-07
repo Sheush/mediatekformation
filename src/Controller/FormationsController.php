@@ -86,11 +86,11 @@ class FormationsController extends AbstractController {
      */
     public function findAllContain($champ, Request $request, $table=""): Response{
         $valeur = $request->get("recherche");
-        switch($table){
-            default:
-                $formations = $this->formationRepository->findByContainValueTable($champ, $valeur, $table);
-            case "":
-                $formations = $this->formationRepository->findByContainValue($champ, $valeur);
+        if ($table == ''){
+            $formations = $this->formationRepository->findByContainValue($champ, $valeur);
+        }
+        else{
+            $formations = $this->formationRepository->findByContainValueTable($champ, $valeur, $table);
         }
         $categories = $this->categorieRepository->findAll();
         return $this->render(self::PAGE_FORMATIONS, [

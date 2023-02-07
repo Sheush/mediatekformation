@@ -90,7 +90,7 @@ class FormationRepository extends ServiceEntityRepository
     /**
      * Enregistrements dont un champ contient une valeur
      * ou tous les enregistrements si la valeur est vide 
-     * et que $champ est dans une autre table
+     * avec $champ dans une autre table
      * @param type $champ
      * @param type $valeur
      * @param type $table
