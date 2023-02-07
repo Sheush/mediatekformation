@@ -9,7 +9,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Form\FormationType;
-use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\Formation;
 
 /**
@@ -40,11 +39,10 @@ class AdminFormationController extends AbstractController
      */
     private const PAGE_FORMATION = "admin/adminFormation.html.twig";
     
-    public function __construct(FormationRepository $formationRepository, CategorieRepository $categorieRepository, EntityManagerInterface $em)
+    public function __construct(FormationRepository $formationRepository, CategorieRepository $categorieRepository)
     {
         $this->formationRepository = $formationRepository;
         $this->categorieRepository = $categorieRepository;
-        $this->em = $em;
     }
     
     /**
@@ -116,8 +114,7 @@ class AdminFormationController extends AbstractController
        $form = $this->createForm(FormationType::class, $formation);
        $form->handleRequest($request);
         if ($form->isSubmitted()&& $form->isValid()){
-            $this->em->persist($formation);
-            $this->em->flush();
+            $this->formationRepository->add($formation, true);
             $this->addFlash('success', 'Formation ajoutée.');
             return $this->redirectToRoute('adminFormations');
         }
@@ -128,7 +125,7 @@ class AdminFormationController extends AbstractController
     }
     
     /**
-     * @Route("/adminformations/formation/{id}", name="adminformations.edit", methods="GET|POST")
+     * @Route("/adminformations/formation/{id}", name="adminformations.edit")
      * @param type $id
      * @return Response
      */
@@ -137,7 +134,7 @@ class AdminFormationController extends AbstractController
         $form = $this->createForm(FormationType::class, $formation);
         $form->handleRequest($request);
         if ($form->isSubmitted()&& $form->isValid()){
-            $this->em->flush();
+            $this->formationRepository->add($formation, true);
             $this->addFlash('success', 'Formation modifiée.');
             return $this->redirectToRoute('adminFormations');
         }
@@ -148,15 +145,14 @@ class AdminFormationController extends AbstractController
     }
     
     /**
-     * @Route("/adminformations/formation/{id}", name="adminformations.delete", methods="DELETE")
+     * @Route("/adminformations/formation/{id}/delete", name="adminformations.delete")
      * @param type $id
      * @return Response
      */
     public function delete($id, Request $request): Response{
         if ($this->isCsrfTokenValid('delete' . $id, $request->get('_token'))){
             $formation = $this->formationRepository->find($id);
-            $this->em->remove($formation);
-            $this->em->flush();
+            $this->formationRepository->remove($formation, true);
             $this->addFlash('success', 'Formation supprimée.');
         }
         return $this->redirectToRoute('adminFormations');
