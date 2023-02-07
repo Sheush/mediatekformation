@@ -2,7 +2,7 @@
 {% block body %}
     <table class="table table-striped">
         <caption></caption>
-        {% for message in app.flashes('success') %}
+        {% for message in app.flashes('form_request') %}
             <div style="background-color: #00e600; font-size: 30px; color: white; border-radius: 10px; text-align: center">
                 {{ message }}
             </div>
@@ -93,6 +93,14 @@
                             <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ formation.id) }}">
                             <button class="btn btn-danger">Supprimer</button>
                         </form>
+                    </td>
+                    <td class="text-center">
+                        {% if formation.miniature %}
+                            <a href="{{ path('formations.showone', {id:formation.id}) }}">
+                                <img src="{{ formation.miniature }}"
+                                     alt="">
+                            </a>
+                        {% endif %}
                     </td>
                 </tr>
             {% endfor %}

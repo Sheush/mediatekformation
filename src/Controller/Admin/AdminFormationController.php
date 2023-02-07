@@ -107,7 +107,7 @@ class AdminFormationController extends AbstractController
     
     /**
      * @Route("/adminformations/formation", name="adminformations.add")
-     * @return Response
+     * @return Response 
      */
     public function add(Request $request): Response{
        $formation = new Formation();
@@ -115,7 +115,7 @@ class AdminFormationController extends AbstractController
        $form->handleRequest($request);
         if ($form->isSubmitted()&& $form->isValid()){
             $this->formationRepository->add($formation, true);
-            $this->addFlash('success', 'Formation ajoutée.');
+            $this->addFlash('form_request', 'Formation ajoutée.');
             return $this->redirectToRoute('adminFormations');
         }
         return $this->render(self::PAGE_FORMATION, [
@@ -135,7 +135,7 @@ class AdminFormationController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted()&& $form->isValid()){
             $this->formationRepository->add($formation, true);
-            $this->addFlash('success', 'Formation modifiée.');
+            $this->addFlash('form_request', 'Formation modifiée.');
             return $this->redirectToRoute('adminFormations');
         }
         return $this->render(self::PAGE_FORMATION, [
@@ -153,7 +153,7 @@ class AdminFormationController extends AbstractController
         if ($this->isCsrfTokenValid('delete' . $id, $request->get('_token'))){
             $formation = $this->formationRepository->find($id);
             $this->formationRepository->remove($formation, true);
-            $this->addFlash('success', 'Formation supprimée.');
+            $this->addFlash('form_request', 'Formation supprimée.');
         }
         return $this->redirectToRoute('adminFormations');
     }

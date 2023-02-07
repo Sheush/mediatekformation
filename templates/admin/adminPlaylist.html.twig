@@ -1,0 +1,29 @@
+{% extends "basefront.html.twig" %}
+{% block body %}
+    <h1> Propriétés de la playlist </h1>
+    {{ form_start(form) }}
+        {{ form_rest(form) }}
+        <button class="btn btn-primary">Sauvegarder</button>
+    {{ form_end(form) }}
+    <div class="col">
+            <!-- boucle sur l'affichage des formations -->
+            {% for formation in playlistformations %}
+                <div class="row mt-1">
+                    <div class="col-md-auto">
+                        {% if formation.miniature %}
+                            <a href="{{ path('formations.showone', {id:formation.id}) }}">
+                                <img src="{{ formation.miniature }}"
+                                     alt="">
+                            </a>
+                        {% endif %}  
+                    </div>
+                    <div class="col d-flex align-items-center">
+                        <a href="{{ path('formations.showone', {id:formation.id}) }}" 
+                           class="link-secondary text-decoration-none">
+                            {{ formation.title }}
+                        </a>          
+                    </div>
+                </div>
+            {% endfor %}
+    </div>
+{% endblock %}
