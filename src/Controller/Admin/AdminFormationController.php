@@ -60,7 +60,7 @@ class AdminFormationController extends AbstractController
     }
     
     /**
-     * @Route("/adminformations/tri/{champ}/{ordre}/{table}", name="adminformations.sort")
+     * @Route("/adminFormations/tri/{champ}/{ordre}/{table}", name="adminFormations.sort")
      * @param type $champ
      * @param type $ordre
      * @param type $table si $champ dans une autre table
@@ -82,7 +82,7 @@ class AdminFormationController extends AbstractController
     }
     
     /**
-     * @Route("/adminformations/recherche/{champ}/{table}", name="adminformations.findallcontain")
+     * @Route("/adminFormations/recherche/{champ}/{table}", name="adminFormations.findallcontain")
      * @param type $champ
      * @param Request $request
      * @param type $table
@@ -106,7 +106,7 @@ class AdminFormationController extends AbstractController
     }
     
     /**
-     * @Route("/adminformations/formation", name="adminformations.add")
+     * @Route("/adminFormations/formation", name="adminFormations.add")
      * @return Response 
      */
     public function add(Request $request): Response{
@@ -125,7 +125,7 @@ class AdminFormationController extends AbstractController
     }
     
     /**
-     * @Route("/adminformations/formation/{id}", name="adminformations.edit")
+     * @Route("/adminFormations/formation/{id}", name="adminFormations.edit")
      * @param type $id
      * @return Response
      */
@@ -145,7 +145,7 @@ class AdminFormationController extends AbstractController
     }
     
     /**
-     * @Route("/adminformations/formation/{id}/delete", name="adminformations.delete")
+     * @Route("/adminFormations/formation/{id}/delete", name="adminFormations.delete")
      * @param type $id
      * @return Response
      */

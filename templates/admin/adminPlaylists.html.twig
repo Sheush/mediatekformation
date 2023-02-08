@@ -11,9 +11,9 @@
             <tr>
                 <th class="text-left align-top" scope="col">
                     playlist<br />
-                    <a href="{{ path('adminplaylists.sort', {champ:'name', ordre:'ASC'}) }}" class="btn btn-info btn-sm active" role="button" aria-pressed="true"><</a>
-                    <a href="{{ path('adminplaylists.sort', {champ:'name', ordre:'DESC'}) }}" class="btn btn-info btn-sm active" role="button" aria-pressed="true">></a>
-                    <form class="form-inline mt-1" method="POST" action="{{ path('adminplaylists.findallcontain', {champ:'name'}) }}">
+                    <a href="{{ path('adminPlaylists.sort', {champ:'name', ordre:'ASC'}) }}" class="btn btn-info btn-sm active" role="button" aria-pressed="true"><</a>
+                    <a href="{{ path('adminPlaylists.sort', {champ:'name', ordre:'DESC'}) }}" class="btn btn-info btn-sm active" role="button" aria-pressed="true">></a>
+                    <form class="form-inline mt-1" method="POST" action="{{ path('adminPlaylists.findallcontain', {champ:'name'}) }}">
                         <div class="form-group mr-1 mb-2">
                             <input type="text" class="sm" name="recherche" 
                                    value="{% if valeur|default and not table|default %}{{ valeur }}{% endif %}">
@@ -24,7 +24,7 @@
                 </th>
                 <th class="text-left align-top" scope="col">
                     catégories
-                    <form class="form-inline mt-1" method="POST" action="{{ path('adminplaylists.findallcontain', {champ:'id', table:'categories'}) }}">
+                    <form class="form-inline mt-1" method="POST" action="{{ path('adminPlaylists.findallcontain', {champ:'id', table:'categories'}) }}">
                         <select class="form-select form-select-sm" name="recherche" id="recherche" onchange="this.form.submit()">
                             <option value=""></option>
                             {% for categorie in categories %}
@@ -42,7 +42,7 @@
                     &nbsp;
                 </th>
                 <th class="text-center align-top" scope="col">
-                    <a href="{{ path('adminplaylists.add') }}" class="btn btn-primary">Ajouter</a>
+                    <a href="{{ path('adminPlaylists.add') }}" class="btn btn-primary">Ajouter</a>
                 </th>
             </tr>
         </thead>
@@ -68,11 +68,11 @@
                         {{ playlists[k].formations|length }}
                     </td>
                     <td class="text-center">
-                        <a href="{{ path('adminplaylists.edit', {id:playlists[k].id}) }}" class="btn btn-secondary">Editer</a>
+                        <a href="{{ path('adminPlaylists.edit', {id:playlists[k].id}) }}" class="btn btn-secondary">Editer</a>
                     </td>
                     <td class="text-center">
                         <form onsubmit="return confirm('Voulez-vous vraiment supprimer cette playlist ?')" 
-                              method="post" action="{{ path('adminplaylists.delete', {id:playlists[k].id}) }}">
+                              method="post" action="{{ path('adminPlaylists.delete', {id:playlists[k].id}) }}">
                             <input type="hidden" name="_method" value="DELETE">
                             <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ playlists[k].id) }}">
                             <button class="btn btn-danger">Supprimer</button>

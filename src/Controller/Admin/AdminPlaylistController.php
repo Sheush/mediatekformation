@@ -68,7 +68,7 @@ class AdminPlaylistController extends AbstractController {
     }
 
     /**
-    * @Route("/adminplaylists/tri/{champ}/{ordre}", name="adminplaylists.sort")
+    * @Route("/adminPlaylists/tri/{champ}/{ordre}", name="adminPlaylists.sort")
     * @param type $champ
     * @param type $ordre
     * @return Response
@@ -92,7 +92,7 @@ class AdminPlaylistController extends AbstractController {
      }         
     
     /**
-     * @Route("/adminplaylists/recherche/{champ}/{table}", name="adminplaylists.findallcontain")
+     * @Route("/adminPlaylists/recherche/{champ}/{table}", name="adminPlaylists.findallcontain")
      * @param type $champ
      * @param Request $request
      * @param type $table
@@ -116,7 +116,7 @@ class AdminPlaylistController extends AbstractController {
     }  
     
     /**
-     * @Route("/adminplaylists/playlist", name="adminplaylists.add")
+     * @Route("/adminPlaylists/playlist", name="adminPlaylists.add")
      * @return Response
      */
     public function add(Request $request): Response{
@@ -140,7 +140,7 @@ class AdminPlaylistController extends AbstractController {
     }
     
     /**
-     * @Route("/adminplaylists/playlist/{id}", name="adminplaylists.edit")
+     * @Route("/adminPlaylists/playlist/{id}", name="adminPlaylists.edit")
      * @param type $id
      * @return Response
      */
@@ -164,17 +164,22 @@ class AdminPlaylistController extends AbstractController {
     }
     
     /**
-     * @Route("/adminplaylists/playlist/{id}/delete", name="adminplaylists.delete")
+     * @Route("/adminPlaylists/playlist/{id}/delete", name="adminPlaylists.delete")
      * @param type $id
      * @return Response
      */
     public function delete($id, Request $request): Response{
-        if ($this->isCsrfTokenValid('delete' . $id, $request->get('_token'))){
-            $playlist = $this->playlistRepository->find($id);
-            $this->playlistRepository->remove($playlist, true);
-            $this->addFlash('playlist_request', 'Playlist supprimée.');
-        }
-        return $this->redirectToRoute('adminPlaylists');
-    }      
+        try {
+            if ($this->isCsrfTokenValid('delete' . $id, $request->get('_token'))) {
+                $playlist = $this->playlistRepository->find($id);
+                $this->playlistRepository->remove($playlist, true);
+                $this->addFlash('playlist_request', 'Playlist supprimée.');
+            }
+            return $this->redirectToRoute('adminPlaylists');
+        } catch (\Exception $e) {
+            $this->addFlash('playlist_request', 'Vous ne pouvez supprimer cette playlist, celle-ci contient des formations.');
+            return $this->redirectToRoute('adminPlaylists');
+    }
+}      
     
 }
