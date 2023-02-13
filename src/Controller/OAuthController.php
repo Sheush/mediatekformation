@@ -18,6 +18,13 @@ class OAuthController extends AbstractController
     }
     
     /**
+     * @Route("logout", name="logout")
+     */
+    public function logout(){
+        
+    }
+    
+    /**
      * @Route("/oauth/callback", name="oauth_check")
      */
     public function connectCheckAction(Request $request, ClientRegistry $clientRegistry){

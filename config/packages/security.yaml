@@ -19,6 +19,8 @@ security:
                 login_path: oauth_login
             custom_authenticators:
                 - App\Security\KeycloakAuthenticator
+            logout:
+                path: logout
 
     access_control:
         - { path: ^/adminCategories, roles: ROLE_ADMIN }

@@ -1,4 +1,4 @@
-{% extends "basefront.html.twig" %}
+{% extends "baseback.html.twig" %}
 {% block body %}
     <table class="table table-striped">
         <caption></caption>
@@ -14,7 +14,7 @@
                         <div class="form-group mr-1 mb-2">
                             <input type="text" class="sm" name="name">
                             <input type="hidden" name="_token" value="{{ csrf_token('add') }}">
-                            <button type="submit" class="btn btn-primary">Ajouter</button>
+                            <button type="submit" class="btn btn-secondary">Ajouter</button>
                         </div>
                     </form>                    
             </th>
