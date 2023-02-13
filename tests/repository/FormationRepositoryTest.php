@@ -3,7 +3,6 @@
 namespace App\tests\repository;
 
 use App\Entity\Formation;
-use App\Entity\Playlist;
 use App\Repository\FormationRepository;
 use DateTime;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
@@ -47,4 +46,13 @@ class FormationRepositoryTest extends KernelTestCase{
                 "erreur lors de l'ajout");
     }
     
+    public function testRemoveFormation(){
+        $repository = $this->recupRepository();
+        $formation = $this->newFormation();
+        $repository->add($formation, true);
+        $nbFormations = $repository->count([]);
+        $repository->remove($formation, true);
+        $this->assertEquals($nbFormations - 1, $repository->count([]),
+                "erreur lors de la suppression");
+    }
 }

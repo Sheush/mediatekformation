@@ -33,7 +33,7 @@
                 <th class="text-left align-top" scope="col">
                     catégories
                     <form class="form-inline mt-1" method="POST" action="{{ path('formations.findallcontain', {champ:'id', table:'categories'}) }}">
-                        <select class="form-select form-select-sm" name="recherche" id="recherche" onchange="this.form.submit()">
+                        <select class="form-select form-select-sm" name="recherche" id="recherche">
                             <option value=""></option>
                             {% for categorie in categories %}
                                 <option 
@@ -43,7 +43,8 @@
                                     value="{{ categorie.id }}">{{ categorie.name }}
                                 </option>
                             {% endfor %}
-                        </select>                    
+                        </select>
+                        <button type="submit" class="btn btn-info mb-2 btn-sm">filtrer</button>
                     </form>            
                 </th>
                 <th class="text-center align-top" scope="col">
