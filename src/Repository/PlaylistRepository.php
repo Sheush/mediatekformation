@@ -79,20 +79,26 @@ class PlaylistRepository extends ServiceEntityRepository
         if($valeur==""){
             return $this->findAllOrderByName('ASC');
         }          
-        return $this->createQueryBuilder('p')
+        $result = $this->createQueryBuilder('p')
                 ->leftjoin('p.formations', 'f')
                 ->where('p.'.$champ.' LIKE :valeur')
                 ->setParameter('valeur', '%'.$valeur.'%')
                 ->groupBy('p.id')
                 ->orderBy('p.name', 'ASC')
                 ->getQuery()
-                ->getResult();                         
+                ->getResult();
+        if ($result != null){
+            return $result;
+        }
+        else{
+            return $this->findAllOrderByName('ASC');
+        }
     }
 
     /**
      * Enregistrements dont un champ contient une valeur
      * ou tous les enregistrements si la valeur est vide 
-     * et que $champ est dans une autre table
+     * avec $champ dans une autre table
      * @param type $champ
      * @param type $valeur
      * @return Playlist[]
@@ -101,7 +107,7 @@ class PlaylistRepository extends ServiceEntityRepository
         if($valeur==""){
             return $this->findAllOrderByName('ASC');
         }       
-        return $this->createQueryBuilder('p')
+        $result = $this->createQueryBuilder('p')
                 ->leftjoin('p.formations', 'f')
                 ->leftjoin('f.categories', 'c')
                 ->where('c.'.$champ.' LIKE :valeur')
@@ -109,7 +115,13 @@ class PlaylistRepository extends ServiceEntityRepository
                 ->groupBy('p.id')
                 ->orderBy('p.name', 'ASC')
                 ->getQuery()
-                ->getResult();                       
+                ->getResult(); 
+        if ($result != null){
+            return $result;
+        }
+        else{
+            return $this->findAllOrderByName('ASC');
+        }
     }
 
 
