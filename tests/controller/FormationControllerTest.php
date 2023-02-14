@@ -3,6 +3,7 @@
 namespace App\tests\controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Description of FormationControllerTest
@@ -12,6 +13,30 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 class FormationControllerTest extends WebTestCase{
     
     private const nombreFormations = 236;
+    
+    public function testSortOnTitle(){
+        $client = static::createClient();
+        $client->request('GET', '/formations/recherche/title');
+        $client->submitForm('filtrer_formation', ['recherche' => 'de']);
+        $this->assertSelectorTextContains('h5',
+                'Eclipse n°8 : Déploiement');
+    }
+    
+    public function testSortOnPlaylist(){
+        $client = static::createClient();
+        $client->request('GET', '/formations/recherche/name/playlist');
+        $client->submitForm('filtrer_playlist', ['recherche' => 'de']);
+        $this->assertSelectorTextContains('h5',
+                'Cours Programmation Objet');
+    }
+    
+    public function testSortOnCategorie(){
+        $client = static::createClient();
+        $client->request('GET', '/formations/recherche/id/categories');
+        $client->submitForm('filtrer_categorie', ['recherche' => '7']);
+        $this->assertSelectorTextContains('h5',
+                "C# : Sérialisation d'objets");
+    }
     
     public function testSortOnTitleAsc(){
         $client = static::createClient();
@@ -58,4 +83,15 @@ class FormationControllerTest extends WebTestCase{
                 'Eclipse n°8 : Déploiement');
     }
 
+    public function testAccessDetails(){
+        $client = static::createClient();
+        $client->request('GET', '/formations');
+        $client->clickLink('miniature');
+        $response = $client->getResponse();
+        $this->assertEquals(Response::HTTP_OK, $response->getStatusCode());
+        $uri = $client->getRequest()->server->get("REQUEST_URI");
+        $this->assertEquals('/formations/formation/1', $uri);
+        $this->assertSelectorTextContains('h4',
+                "Eclipse n°8 : Déploiement");
+    }
 }
