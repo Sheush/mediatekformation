@@ -11,7 +11,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Categorie;
 
 /**
- * Description of AdminFormationController
+ * Contrôleur Admin des catégories
  *
  * @author Maxat
  */

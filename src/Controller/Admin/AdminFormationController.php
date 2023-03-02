@@ -12,7 +12,7 @@ use App\Form\FormationType;
 use App\Entity\Formation;
 
 /**
- * Description of AdminFormationController
+ * Contrôleur Admin des formations
  *
  * @author Maxat
  */

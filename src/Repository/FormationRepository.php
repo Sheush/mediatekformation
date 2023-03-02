@@ -57,7 +57,7 @@ class FormationRepository extends ServiceEntityRepository
      * dans une autre table
      * @param type $champ
      * @param type $ordre
-     * @param type $table si $champ dans une autre table
+     * @param type $table
      * @return Formation[]
      */
     public function findAllOrderByTable($champ, $ordre, $table=""): array{

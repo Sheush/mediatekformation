@@ -12,7 +12,7 @@ use App\Form\PlaylistType;
 use App\Entity\Playlist;
 
 /**
- * Description of PlaylistsController
+ * Contrôleur Admin des playlists
  *
  * @author emds
  */

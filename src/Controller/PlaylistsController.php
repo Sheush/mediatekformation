@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * Description of PlaylistsController
+ * Contrôleur des playlists
  *
  * @author emds
  */
@@ -35,14 +35,9 @@ class PlaylistsController extends AbstractController {
     private $categorieRepository; 
     
     /**
-     * Page twig pour les playlists
+     * Page twig pour afficher les playlists
      */
     private const PAGE_PLAYLISTS = "pages/playlists.html.twig";
-    
-    /**
-     * Page twig pour une playlist
-     */
-    private const PAGE_PLAYLIST = "pages/playlist.html.twig";
     
     function __construct(PlaylistRepository $playlistRepository, 
             CategorieRepository $categorieRepository,
